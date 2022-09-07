@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+// TODO: https://www.youtube.com/watch?v=f473C43s8nE
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
-    Vector2 horizontalMovement;
+    Vector2 horizontalInput;
     Vector2 verticalMovement;
     Rigidbody rb;
     [SerializeField] float speed;
@@ -27,12 +28,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = new Vector3(horizontalMovement.x * speed, rb.velocity.y, horizontalMovement.y * speed);
+        rb.velocity = new Vector3(horizontalInput.x * speed, rb.velocity.y, horizontalInput.y * speed);
     }
 
     public void Move(InputAction.CallbackContext context)
     {
-        horizontalMovement = context.ReadValue<Vector2>();
+        horizontalInput = context.ReadValue<Vector2>();
     }
 
 
@@ -46,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         if(context.performed)
         {
             verticalMovement.y = jumpPower;
-            rb.velocity = new Vector3(horizontalMovement.x, verticalMovement.y, horizontalMovement.y);
+            rb.velocity = new Vector3(horizontalInput.x, verticalMovement.y, horizontalInput.y);
         }
     }
 

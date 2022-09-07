@@ -34,6 +34,7 @@ public class GrappleGun : MonoBehaviour
         {
             if(Physics.Raycast(Camera.position, Camera.forward, out hit, maxDistance, grappleable))
             {
+                
                 grapplePoint = hit.point;
                 joint = Player.gameObject.AddComponent<SpringJoint>();
                 joint.autoConfigureConnectedAnchor = false;
@@ -53,7 +54,7 @@ public class GrappleGun : MonoBehaviour
 
         if(context.canceled)
         {
-            line.positionCount = 0;
+           // line.positionCount = 0;
             Destroy(joint);
         }
     }
@@ -62,6 +63,8 @@ public class GrappleGun : MonoBehaviour
     {
         if(!joint)
         {
+            line.SetPosition(0, Vector3.zero);
+            line.SetPosition(1, Vector3.zero);
             return;
         }
         line.SetPosition(0, barrel.position);
