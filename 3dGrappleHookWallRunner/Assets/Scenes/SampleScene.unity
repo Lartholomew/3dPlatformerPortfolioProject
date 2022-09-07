@@ -942,7 +942,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60bd27f4c367874ab4b449c00e82596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  groundDrag: 6
+  airDrag: 2
+  speed: 6
+  movementMultiplier: 10
+  airMultiplier: 0.4
   jumpPower: 10
   groundCheckPos: {fileID: 416083195}
   groundLayer:
