@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 // TODO: https://www.youtube.com/watch?v=LqnPeqoJRFY video series has wall running in it
+// TODO: mess with air drag/movment values get it how I want it, mess with wall jump force get it right where its needed, mess with grapple hook joint values get those just right, build level
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
