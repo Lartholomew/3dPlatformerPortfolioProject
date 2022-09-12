@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class MouseLook : MonoBehaviour
 {
+    [SerializeField] WallRun wallRun;
     [SerializeField] float sensitivityX = 8f;
     [SerializeField] float sensitivityY = 0.5f;
     float mouseX;
@@ -28,6 +29,7 @@ public class MouseLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -xClamp, xClamp);
         Vector3 targetRotation = transform.eulerAngles;
         targetRotation.x = xRotation;
+        targetRotation.z = wallRun.tilt;
         playerCamera.eulerAngles = targetRotation;
     }
 
