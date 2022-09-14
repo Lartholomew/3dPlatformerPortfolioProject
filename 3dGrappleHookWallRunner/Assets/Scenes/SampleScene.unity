@@ -224,7 +224,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   barrel: {fileID: 1332401454}
-  Camera: {fileID: 1420371692}
+  Camera: {fileID: 963194228}
   Player: {fileID: 437705169}
   maxDistance: 100
 --- !u!120 &92619672
