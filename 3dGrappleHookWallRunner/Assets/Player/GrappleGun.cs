@@ -42,7 +42,7 @@ public class GrappleGun : MonoBehaviour
                 float distancefromPoint = Vector3.Distance(Player.position, grapplePoint);
 
                 //Distance grapple will try to keep from grapple point
-                joint.maxDistance = distancefromPoint * 0.8f;
+                joint.maxDistance = distancefromPoint * 0.4f;
                 joint.minDistance = distancefromPoint * 0.25f;
 
                 // change values to adjust gameplay

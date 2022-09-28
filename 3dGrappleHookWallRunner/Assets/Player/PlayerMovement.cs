@@ -81,15 +81,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if(IsGrounded() && !IsOnSlope())
         {
-            rb.AddForce(moveDirection.normalized * speed * movementMultiplier, ForceMode.Acceleration);
+            rb.AddForce(moveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
         }
         else if(IsGrounded() && IsOnSlope())
         {
-            rb.AddForce(slopeMoveDirection.normalized * speed * movementMultiplier, ForceMode.Acceleration);
+            rb.AddForce(slopeMoveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
         }
         else if(!IsGrounded())
         {
-            rb.AddForce(moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Acceleration);
+            rb.AddForce(moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Force);
         }
         
     }
