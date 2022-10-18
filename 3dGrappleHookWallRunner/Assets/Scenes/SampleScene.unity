@@ -1875,6 +1875,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2093065511 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7447775721328635165, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
+  m_PrefabInstance: {fileID: 7447775720958637256}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9c89e35cdf35214481eb15996c8a8f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7447775720958637256
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1934,21 +1945,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7447775721328635163, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
-      propertyPath: airDrag
-      value: 0
+    - target: {fileID: 7447775721328635162, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7447775721328635163, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
-      propertyPath: jumpPower
-      value: 4
+    - target: {fileID: 7447775721328635162, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7447775721328635163, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
-      propertyPath: airMultiplier
-      value: 0.1
+    - target: {fileID: 7447775721328635162, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2093065511}
+    - target: {fileID: 7447775721328635162, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 7447775721328635165, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
-      propertyPath: wallJumpForce
-      value: 225
+    - target: {fileID: 7447775721328635162, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: WallJump
+      objectReference: {fileID: 0}
+    - target: {fileID: 7447775721328635162, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: WallRun, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7447775721328635162, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}

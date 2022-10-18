@@ -28,6 +28,9 @@ public class PlayerMovement : MonoBehaviour
 
     RaycastHit hit;
 
+
+    [SerializeField] Transform respawnPoint; // empty object in the scene("RespawnPoint") is the respawn point can adjust to create checkpoint system
+
     bool IsOnSlope()
     {
         if(Physics.Raycast(transform.position, Vector3.down, out hit, 2 / 2 + 0.5f)) // raycast distance is player height / 2 + 0.5f can adjust for better detection
@@ -72,6 +75,11 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             SetDrag(airDrag);
+            if(transform.position.y < -10)
+            {
+                rb.velocity = Vector3.zero;
+                transform.position = respawnPoint.position;
+            }
         }
         moveDirection = transform.forward * horizontalInput.y + transform.right * horizontalInput.x;
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, hit.normal); // if the player is on a slope make the movement vector perpendicular to slope for cleaner movement
@@ -102,20 +110,26 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if(!IsGrounded()) //  one check simplyifying if statements keeping from inbeding them, if not grounded dont jump
+        if(context.performed)
         {
-            if (context.performed && wallRun.wallRight == true || wallRun.wallLeft == true) // check if can walljump before exiting method
+            if (!IsGrounded()) //  one check simplyifying if statements keeping from inbeding them, if not grounded dont jump
             {
-                wallRun.WallJump();
+                // TODO: wall jump off of the left side of the character results in the jump being doubled, input is also being detected on release
+                if (context.performed && wallRun.wallRight == true || wallRun.wallLeft == true) // check if can walljump before exiting method
+                {
+                    rb.AddForce(moveDirection.normalized * (speed * 2) * airMultiplier * movementMultiplier, ForceMode.Force); // applies forward force when walljumping
+                    wallRun.WallJump();
+                }
+                return;
             }
-            return;
+
+            if (wallRun.wallRight == false || wallRun.wallLeft == false)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // reseting y velocity to fix minor bug for jumping, tiny jumps because it is fighting the downward velocity
+                rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+            }   
         }
 
-        if(context.performed && wallRun.wallRight == false || wallRun.wallLeft == false)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // reseting y velocity to fix minor bug for jumping, tiny jumps because it is fighting the downward velocity
-            rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
-        }
     }
 
 }

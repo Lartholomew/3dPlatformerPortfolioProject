@@ -15,6 +15,8 @@ public class WallRun : MonoBehaviour
     public bool wallLeft = false;
     public bool wallRight = false;
 
+
+
     Rigidbody rb;
 
     RaycastHit leftWallHit;
@@ -58,12 +60,10 @@ public class WallRun : MonoBehaviour
             if(wallLeft)
             {
                 StartWallRun();
-                Debug.Log("wall running on left");
             }
             else if(wallRight)
             {
                 StartWallRun();
-                Debug.Log("Wall running on right");
             }
             else
             {
@@ -81,7 +81,7 @@ public class WallRun : MonoBehaviour
     void StartWallRun()
     {
         rb.useGravity = false;
-        rb.AddForce(Vector3.down * wallRunGrav, ForceMode.Force);
+      //  rb.AddForce(Vector3.down * wallRunGrav, ForceMode.Force);
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, wallRunFov, wallRunFovTime * Time.deltaTime);
 
@@ -93,6 +93,7 @@ public class WallRun : MonoBehaviour
 
     public void WallJump() // called in the playermovemtn script to handle wall jumping
     {
+        Debug.Log("wall jump");
         if (wallLeft)
         {
             Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;

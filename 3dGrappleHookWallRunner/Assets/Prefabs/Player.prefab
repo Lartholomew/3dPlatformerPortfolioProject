@@ -674,11 +674,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallRun: {fileID: 7447775721328635165}
   groundDrag: 6
-  airDrag: 2
+  airDrag: 0
   speed: 6
   movementMultiplier: 10
-  airMultiplier: 0.4
-  jumpPower: 4
+  airMultiplier: 0.1
+  jumpPower: 6
   groundCheckPos: {fileID: 7447775721357334579}
   groundLayer:
     serializedVersion: 2
