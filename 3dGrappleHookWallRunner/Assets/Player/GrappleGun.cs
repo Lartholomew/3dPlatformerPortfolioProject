@@ -59,6 +59,14 @@ public class GrappleGun : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Call in other classes to cleanup the joint of the grapple gun
+    /// </summary>
+    public void DestroyJoint()
+    {
+        Destroy(joint);
+    }
+
     void DrawRope()
     {
         if(!joint)

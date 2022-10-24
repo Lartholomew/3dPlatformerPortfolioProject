@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] WallRun wallRun;
+    [SerializeField] GrappleGun grappleGun; // reference to grapple gun for destroying the grapple point on respawn
     Vector2 horizontalInput;
     Vector3 moveDirection;
     Vector3 slopeMoveDirection;
@@ -77,8 +78,7 @@ public class PlayerMovement : MonoBehaviour
             SetDrag(airDrag);
             if(transform.position.y < -10)
             {
-                rb.velocity = Vector3.zero;
-                transform.position = respawnPoint.position;
+                Respawn();
             }
         }
         moveDirection = transform.forward * horizontalInput.y + transform.right * horizontalInput.x;
@@ -130,6 +130,13 @@ public class PlayerMovement : MonoBehaviour
             }   
         }
 
+    }
+
+    void Respawn()
+    {
+        grappleGun.DestroyJoint();
+        rb.velocity = Vector3.zero;
+        transform.position = respawnPoint.position;
     }
 
 }
