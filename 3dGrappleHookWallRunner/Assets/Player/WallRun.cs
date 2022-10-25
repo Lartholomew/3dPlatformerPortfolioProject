@@ -96,7 +96,7 @@ public class WallRun : MonoBehaviour
         Debug.Log("wall jump");
         if (wallLeft)
         {
-            Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
+            Vector3 wallRunJumpDirection = transform.forward + transform.up + leftWallHit.normal;
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(wallRunJumpDirection * wallJumpForce, ForceMode.Force);
         }

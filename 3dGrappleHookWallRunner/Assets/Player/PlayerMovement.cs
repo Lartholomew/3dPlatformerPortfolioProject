@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float airMultiplier; // account for less drag in the air
     [SerializeField] float jumpPower;
 
+    [SerializeField] float maxAcceleration;
+
     [SerializeField] Transform groundCheckPos;
     [SerializeField] LayerMask groundLayer;
 
@@ -98,6 +100,10 @@ public class PlayerMovement : MonoBehaviour
         else if(!IsGrounded())
         {
             rb.AddForce(moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Force);
+        }
+        if(rb.velocity.magnitude > maxAcceleration)
+        {
+            
         }
         
     }
