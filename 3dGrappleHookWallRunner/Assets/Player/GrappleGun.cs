@@ -14,6 +14,8 @@ public class GrappleGun : MonoBehaviour
     RaycastHit hit;
     Ray ray;
 
+
+    public bool grappling;
     Vector3 grapplePoint;
     SpringJoint joint;
     // Start is called before the first frame update
@@ -34,7 +36,7 @@ public class GrappleGun : MonoBehaviour
         {
             if(Physics.Raycast(Camera.position, Camera.forward, out hit, maxDistance, grappleable))
             {
-                
+                grappling = true;
                 grapplePoint = hit.point;
                 joint = Player.gameObject.AddComponent<SpringJoint>();
                 joint.autoConfigureConnectedAnchor = false;
@@ -64,6 +66,7 @@ public class GrappleGun : MonoBehaviour
     /// </summary>
     public void DestroyJoint()
     {
+        grappling = false;
         Destroy(joint);
     }
 

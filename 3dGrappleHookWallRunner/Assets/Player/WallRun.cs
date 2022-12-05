@@ -12,7 +12,9 @@ public class WallRun : MonoBehaviour
     [SerializeField] float wallRunGrav;
     [SerializeField] float wallJumpForce;
 
+    [HideInInspector]
     public bool wallLeft = false;
+    [HideInInspector]
     public bool wallRight = false;
 
 
@@ -23,7 +25,7 @@ public class WallRun : MonoBehaviour
     RaycastHit rightWallHit;
 
     [SerializeField] Camera cam;
-    [SerializeField] float fov;
+    [SerializeField] float defaultFov;
     [SerializeField] float wallRunFov;
     [SerializeField] float wallRunFovTime;
     [SerializeField] float camTilt;
@@ -111,7 +113,7 @@ public class WallRun : MonoBehaviour
     void StopWallRun()
     {
         rb.useGravity = true;
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, fov, wallRunFovTime * Time.deltaTime);
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, defaultFov, wallRunFovTime * Time.deltaTime);
         tilt = Mathf.Lerp(tilt, 0, camTiltTime * Time.deltaTime);
     }
 }

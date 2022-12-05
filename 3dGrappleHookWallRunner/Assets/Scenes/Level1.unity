@@ -1881,6 +1881,10 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7447775721328635165, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
+      propertyPath: defaultFov
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7447775721328635165, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
       propertyPath: wallRunGrav
       value: 2
       objectReference: {fileID: 0}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-// TODO: https://www.youtube.com/watch?v=LqnPeqoJRFY video series has wall running in it
+// TODO: create more organization for the variables in the inspector
 // TODO: mess with air drag/movment values get it how I want it, mess with wall jump force get it right where its needed, mess with grapple hook joint values get those just right, build level
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
@@ -33,8 +33,8 @@ public class PlayerMovement : MonoBehaviour
 
 
     [SerializeField] Transform respawnPoint; // empty object in the scene("RespawnPoint") is the respawn point can adjust to create checkpoint system
-
     bool IsOnSlope()
+
     {
         if(Physics.Raycast(transform.position, Vector3.down, out hit, 2 / 2 + 0.5f)) // raycast distance is player height / 2 + 0.5f can adjust for better detection
         {
@@ -101,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Force);
         }
+
         if(rb.velocity.magnitude > maxAcceleration)
         {
             
@@ -121,9 +122,8 @@ public class PlayerMovement : MonoBehaviour
             if (!IsGrounded()) //  one check simplyifying if statements keeping from inbeding them, if not grounded dont jump
             {
                 // TODO: wall jump off of the left side of the character results in the jump being doubled, input is also being detected on release
-                if (context.performed && wallRun.wallRight == true || wallRun.wallLeft == true) // check if can walljump before exiting method
-                {
-                    rb.AddForce(moveDirection.normalized * (speed * 2) * airMultiplier * movementMultiplier, ForceMode.Force); // applies forward force when walljumping
+                if (wallRun.wallRight == true || wallRun.wallLeft == true) // check if can walljump before exiting method
+                { 
                     wallRun.WallJump();
                 }
                 return;
