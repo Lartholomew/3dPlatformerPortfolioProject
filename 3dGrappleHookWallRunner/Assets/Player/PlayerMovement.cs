@@ -104,7 +104,19 @@ public class PlayerMovement : MonoBehaviour
 
         if(rb.velocity.magnitude > maxAcceleration)
         {
-            
+            if (IsGrounded() && !IsOnSlope())
+            {
+                rb.AddForce(-moveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
+            }
+            else if (IsGrounded() && IsOnSlope())
+            {
+                rb.AddForce(slopeMoveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
+            }
+            else if (!IsGrounded())
+            {
+                rb.AddForce(-moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Force);
+            }
+            Debug.Log("Capping velocity");
         }
         
     }
