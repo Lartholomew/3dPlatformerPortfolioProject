@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+
 [RequireComponent(typeof(Rigidbody))]
 public class WallRun : MonoBehaviour
 {
     Transform orientation; // player transform
 
+    CancellationTokenSource wallRunCancellationSource; // declaring token
 
     [Header("Wall Jump Stats")]
     [SerializeField] float wallDistance = 0.5f;
     [SerializeField] float minimumJumpHeight = 1.5f;
     [SerializeField] float wallRunGrav;
     [SerializeField] float wallJumpForce;
-    [SerializeField] float wallGravActivationDelay;
+    [SerializeField] int wallGravActivationDelay;
 
 
 
@@ -38,6 +42,7 @@ public class WallRun : MonoBehaviour
     [SerializeField] float camTiltTime;
 
     public float tilt { get; private set; }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -91,7 +96,16 @@ public class WallRun : MonoBehaviour
     void StartWallRun()
     {
         // TODO: use async to create a delay on activating the wall run
+        if(wallRunCancellationSource.Token != null)
+        {
+            wallRunCancellationSource.Cancel();
+            wallRunCancellationSource.Dispose();
+            wallRunCancellationSource = new CancellationTokenSource();
+        }
         rb.useGravity = false;
+        rb.velocity = Vector3.zero;
+        WallGravActivation(wallRunCancellationSource.Token);
+       // rb.useGravity = true;
         if(useWallRunGrav)
         rb.AddForce(Vector3.down * wallRunGrav, ForceMode.Force);
 
@@ -121,11 +135,31 @@ public class WallRun : MonoBehaviour
         }
     }
 
+    private async void WallGravActivation(CancellationToken token)
+    {
+        Debug.Log("Starting task...");
+        await UniTask.Delay(wallGravActivationDelay);
+        useWallRunGrav = true;
+        Debug.Log("Task done...");
+    }
+
 
     void StopWallRun()
     {
         rb.useGravity = true;
+        useWallRunGrav = false;
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, defaultFov, wallRunFovTime * Time.deltaTime);
         tilt = Mathf.Lerp(tilt, 0, camTiltTime * Time.deltaTime);
+    }
+
+    private void OnEnable()
+    {
+        wallRunCancellationSource = new CancellationTokenSource(); // creating token
+    }
+
+    private void OnDisable()
+    {
+        wallRunCancellationSource.Cancel();  // forces operation to continue
+        wallRunCancellationSource.Dispose(); // releasing memory garbage to be collected
     }
 }

@@ -3681,7 +3681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7447775721328635165, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
       propertyPath: wallGravActivationDelay
-      value: 3
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}

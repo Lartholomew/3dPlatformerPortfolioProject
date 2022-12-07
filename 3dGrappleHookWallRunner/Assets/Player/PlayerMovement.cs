@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 // TODO: create more organization for the variables in the inspector
 // TODO: mess with air drag/movment values get it how I want it, mess with wall jump force get it right where its needed, mess with grapple hook joint values get those just right, build level
 [RequireComponent(typeof(Rigidbody))]
@@ -34,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] Transform respawnPoint; // empty object in the scene("RespawnPoint") is the respawn point can adjust to create checkpoint system
 
+    
+
+    
 
     RaycastHit hit;
     bool IsOnSlope()
