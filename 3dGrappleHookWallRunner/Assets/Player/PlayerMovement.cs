@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         
         if(IsGrounded() && !IsOnSlope())
         {
-           // rb.AddForce(moveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
+           // rb.AddForce(moveDirection.normalized * speed * movementMultiplier, ForceMode.Force); // old movement that doesnt utilize acceleration and stopping the player from accelerating past their maximum 
            rb.AddForce(Acceleration(moveDirection.normalized) * speed * movementMultiplier, ForceMode.Force);
         }
         else if(IsGrounded() && IsOnSlope())
@@ -114,7 +114,6 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 Acceleration(Vector3 prevVelocity)
     {
-        Debug.Log("acceleration");
         float projVel = Vector3.Dot(prevVelocity, transform.forward);
         if(projVel == 0) // checking if there is no motion
             return prevVelocity;
