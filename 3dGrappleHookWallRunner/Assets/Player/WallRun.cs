@@ -4,13 +4,16 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class WallRun : MonoBehaviour
 {
-    [SerializeField] Transform orientation;
+    Transform orientation; // player transform
 
+
+    [Header("Wall Jump Stats")]
     [SerializeField] float wallDistance = 0.5f;
     [SerializeField] float minimumJumpHeight = 1.5f;
-
     [SerializeField] float wallRunGrav;
     [SerializeField] float wallJumpForce;
+
+
 
     [HideInInspector]
     public bool wallLeft = false;
@@ -23,10 +26,10 @@ public class WallRun : MonoBehaviour
 
     RaycastHit leftWallHit;
     RaycastHit rightWallHit;
-    LayerMask wallLayer;
-
+    [SerializeField] LayerMask wallLayer;
+    [Header("Wall Run Camera Settings")]
     [SerializeField] Camera cam;
-    [SerializeField] float defaultFov;
+    float defaultFov;
     [SerializeField] float wallRunFov;
     [SerializeField] float wallRunFovTime;
     [SerializeField] float camTilt;
@@ -36,6 +39,8 @@ public class WallRun : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        orientation = GetComponent<Transform>();
+        defaultFov = cam.fieldOfView;
     }
     bool CanWallRun()
     {
@@ -44,12 +49,12 @@ public class WallRun : MonoBehaviour
 
     void CheckWall()
     {
-        wallLeft = Physics.Raycast(transform.position, -orientation.right,out leftWallHit ,wallDistance);
+        wallLeft = Physics.Raycast(transform.position, -orientation.right,out leftWallHit ,wallDistance, wallLayer);
         if(wallLeft == true) // if wallleft is true no need to check wall right
         {
             return;
         }
-        wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallDistance);
+        wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallDistance, wallLayer);
     }
 
 
@@ -84,7 +89,7 @@ public class WallRun : MonoBehaviour
     void StartWallRun()
     {
         rb.useGravity = false;
-      //  rb.AddForce(Vector3.down * wallRunGrav, ForceMode.Force);
+        rb.AddForce(Vector3.down * wallRunGrav, ForceMode.Force);
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, wallRunFov, wallRunFovTime * Time.deltaTime);
 
@@ -94,15 +99,16 @@ public class WallRun : MonoBehaviour
             tilt = Mathf.Lerp(tilt, camTilt, camTiltTime * Time.deltaTime);
     }
 
-    public void WallJump() // called in the playermovemtn script to handle wall jumping
-    {
-        Debug.Log("wall jump");
+    public void WallJump() // called in the playermovement script to handle wall jumping in the Jump method
+    { 
+        // checking if there is a wall jumping off of is on the right or left
         if (wallLeft)
         {
-            Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(wallRunJumpDirection * wallJumpForce, ForceMode.Force);
+            Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal; // calculating what direction to add force adding up
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // resetting the players y velocity
+            rb.AddForce(wallRunJumpDirection * wallJumpForce, ForceMode.Force); // adding force to the player
         }
+        // same process as on the left
         else if (wallRight)
         {
             Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;

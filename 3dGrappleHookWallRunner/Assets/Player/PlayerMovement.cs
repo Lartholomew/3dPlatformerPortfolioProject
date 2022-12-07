@@ -7,32 +7,35 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Script Dependencies")]
     [SerializeField] WallRun wallRun;
     [SerializeField] GrappleGun grappleGun; // reference to grapple gun for destroying the grapple point on respawn
+
+
     Vector2 horizontalInput;
     Vector3 moveDirection;
     Vector3 slopeMoveDirection;
 
+    [Header("Drag settings")]
     [SerializeField] float groundDrag = 6f; // drag for ground movement prevents slippery sliding
     [SerializeField] float airDrag = 2f; // drag when in the air to prevent slow falling
 
     
     Rigidbody rb;
-
+    [Header("Movement Stats")]
     [SerializeField] float speed; // grounded movement speed
     [SerializeField] float movementMultiplier; // overcome drag
     [SerializeField] float airMultiplier; // account for less drag in the air
     [SerializeField] float jumpPower;
-
     [SerializeField] float maxAcceleration;
-
+    
+    [Header("Transforms/Layer settings")]
     [SerializeField] Transform groundCheckPos;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] Transform respawnPoint; // empty object in the scene("RespawnPoint") is the respawn point can adjust to create checkpoint system
+
 
     RaycastHit hit;
-
-
-    [SerializeField] Transform respawnPoint; // empty object in the scene("RespawnPoint") is the respawn point can adjust to create checkpoint system
     bool IsOnSlope()
 
     {
@@ -83,47 +86,52 @@ public class PlayerMovement : MonoBehaviour
                 Respawn();
             }
         }
-        moveDirection = transform.forward * horizontalInput.y + transform.right * horizontalInput.x;
+        moveDirection = transform.forward * horizontalInput.y + transform.right * horizontalInput.x; // calculating the direction the player should move in adds the transform forward and right, inputs will either be 0 or 1
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, hit.normal); // if the player is on a slope make the movement vector perpendicular to slope for cleaner movement
     }
 
     private void FixedUpdate()
     {
+        
         if(IsGrounded() && !IsOnSlope())
         {
-            rb.AddForce(moveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
+           // rb.AddForce(moveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
+           rb.AddForce(Acceleration(moveDirection.normalized) * speed * movementMultiplier, ForceMode.Force);
         }
         else if(IsGrounded() && IsOnSlope())
         {
-            rb.AddForce(slopeMoveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
+           // rb.AddForce(slopeMoveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
+           rb.AddForce(Acceleration(moveDirection.normalized) * speed * movementMultiplier, ForceMode.Force);
         }
         else if(!IsGrounded())
         {
-            rb.AddForce(moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Force);
+           // rb.AddForce(moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Force);
+           rb.AddForce(Acceleration(moveDirection.normalized) * speed * movementMultiplier * airMultiplier, ForceMode.Force);
         }
-
-        if(rb.velocity.magnitude > maxAcceleration)
-        {
-            if (IsGrounded() && !IsOnSlope())
-            {
-                rb.AddForce(-moveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
-            }
-            else if (IsGrounded() && IsOnSlope())
-            {
-                rb.AddForce(slopeMoveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
-            }
-            else if (!IsGrounded())
-            {
-                rb.AddForce(-moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Force);
-            }
-            Debug.Log("Capping velocity");
-        }
+        
         
     }
 
+    Vector3 Acceleration(Vector3 prevVelocity)
+    {
+        Debug.Log("acceleration");
+        float projVel = Vector3.Dot(prevVelocity, transform.forward);
+        if(projVel == 0) // checking if there is no motion
+            return prevVelocity;
+
+        float accelVel = speed * Time.fixedDeltaTime;
+
+        if (projVel + accelVel > maxAcceleration)
+            accelVel = maxAcceleration - projVel;
+
+        return prevVelocity + transform.forward * accelVel;
+    }
+
+
     public void Move(InputAction.CallbackContext context)
     {
-        horizontalInput = context.ReadValue<Vector2>();       
+        horizontalInput = context.ReadValue<Vector2>();
+
     }
 
 

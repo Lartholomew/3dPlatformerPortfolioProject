@@ -7,15 +7,26 @@ public class GrappleGun : MonoBehaviour
 {
     LineRenderer line;
     [SerializeField] LayerMask grappleable;
+    [Header("Transforms")]
     [SerializeField] Transform barrel;
     [SerializeField] Transform Camera;
     [SerializeField] Transform Player;
+    [Header("GrappleHookStats")]
     [SerializeField] float maxDistance = 100f;
+    [Range(1f, 10f)]
+    [SerializeField] float springValue = 4.5f;
+    [Range(1f, 10f)]
+    [SerializeField] float damperValue = 7f;
+    [Range(1f, 10f)]
+    [SerializeField] float massScaleValue = 4.5f;
+
+
     RaycastHit hit;
     Ray ray;
 
-
+    [HideInInspector]
     public bool grappling;
+
     Vector3 grapplePoint;
     SpringJoint joint;
     // Start is called before the first frame update
@@ -48,9 +59,9 @@ public class GrappleGun : MonoBehaviour
                 joint.minDistance = distancefromPoint * 0.25f;
 
                 // change values to adjust gameplay
-                joint.spring = 4.5f;
-                joint.damper = 7f;
-                joint.massScale = 4.5f;
+                joint.spring = springValue; // strength of the spring
+                joint.damper = damperValue; // how much force is absorbed by the spring higher value = more
+                joint.massScale = massScaleValue; 
             }
         }
 
