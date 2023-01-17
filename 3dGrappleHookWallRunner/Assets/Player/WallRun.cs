@@ -12,7 +12,6 @@ public class WallRun : MonoBehaviour
     [SerializeField] float minimumJumpHeight = 1.5f;
     [SerializeField] float wallRunGrav;
     [SerializeField] float wallJumpForce;
-    [SerializeField] float wallGravActivationDelay;
 
 
 
@@ -20,7 +19,6 @@ public class WallRun : MonoBehaviour
     public bool wallLeft = false;
     [HideInInspector]
     public bool wallRight = false;
-    private bool useWallRunGrav;
 
 
 
@@ -90,9 +88,7 @@ public class WallRun : MonoBehaviour
 
     void StartWallRun()
     {
-        // TODO: use async to create a delay on activating the wall run
         rb.useGravity = false;
-        if(useWallRunGrav)
         rb.AddForce(Vector3.down * wallRunGrav, ForceMode.Force);
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, wallRunFov, wallRunFovTime * Time.deltaTime);
@@ -120,7 +116,6 @@ public class WallRun : MonoBehaviour
             rb.AddForce(wallRunJumpDirection * wallJumpForce, ForceMode.Force);
         }
     }
-
 
     void StopWallRun()
     {
