@@ -7,27 +7,19 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
+    
+
     [Header("Script Dependencies")]
-    [SerializeField] WallRun wallRun;
+    [SerializeField] WallRun wallRun; // for accessing wall run methods 
     [SerializeField] GrappleGun grappleGun; // reference to grapple gun for destroying the grapple point on respawn
+    [SerializeField] PlayerStats playerStats;
 
 
     Vector2 horizontalInput;
     Vector3 moveDirection;
     Vector3 slopeMoveDirection;
-
-    [Header("Drag settings")]
-    [SerializeField] float groundDrag = 6f; // drag for ground movement prevents slippery sliding
-    [SerializeField] float airDrag = 2f; // drag when in the air to prevent slow falling
-
     
     Rigidbody rb;
-    [Header("Movement Stats")]
-    [SerializeField] float speed; // grounded movement speed
-    [SerializeField] float movementMultiplier; // overcome drag
-    [SerializeField] float airMultiplier; // account for less drag in the air
-    [SerializeField] float jumpPower;
-    [SerializeField] float maxAcceleration;
     
     [Header("Transforms/Layer settings")]
     [SerializeField] Transform groundCheckPos;
@@ -57,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        SetDrag(groundDrag);
+        SetRbDrag(playerStats.groundDrag);
     }
 
     bool IsGrounded()
@@ -65,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         return Physics.CheckSphere(groundCheckPos.position, 0.1f, groundLayer);
     }
 
-    void SetDrag(float drag)
+    void SetRbDrag(float drag)
     {
         rb.drag = drag;
     }
@@ -76,11 +68,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if(IsGrounded())
         {
-            SetDrag(groundDrag);
+            SetRbDrag(playerStats.groundDrag);
         }
         else
         {
-            SetDrag(airDrag);
+            SetRbDrag(playerStats.airDrag);
             if(transform.position.y < -10)
             {
                 Respawn();
@@ -96,17 +88,17 @@ public class PlayerMovement : MonoBehaviour
         if(IsGrounded() && !IsOnSlope())
         {
            // rb.AddForce(moveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
-           rb.AddForce(Acceleration(moveDirection.normalized) * speed * movementMultiplier, ForceMode.Force);
+           rb.AddForce(Acceleration(moveDirection.normalized) * playerStats.speed * playerStats.movementMultiplier, ForceMode.Force);
         }
         else if(IsGrounded() && IsOnSlope())
         {
            // rb.AddForce(slopeMoveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
-           rb.AddForce(Acceleration(moveDirection.normalized) * speed * movementMultiplier, ForceMode.Force);
+           rb.AddForce(Acceleration(moveDirection.normalized) * playerStats.speed * playerStats.movementMultiplier, ForceMode.Force);
         }
         else if(!IsGrounded())
         {
            // rb.AddForce(moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Force);
-           rb.AddForce(Acceleration(moveDirection.normalized) * speed * movementMultiplier * airMultiplier, ForceMode.Force);
+           rb.AddForce(Acceleration(moveDirection.normalized) * playerStats.speed * playerStats.movementMultiplier * playerStats.airMultiplier, ForceMode.Force);
         }
         
         
@@ -114,15 +106,14 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 Acceleration(Vector3 prevVelocity)
     {
-        Debug.Log("acceleration");
-        float projVel = Vector3.Dot(prevVelocity, transform.forward);
+        float projVel = Vector3.Dot(prevVelocity, transform.forward); // the projected velocity of the player
         if(projVel == 0) // checking if there is no motion
             return prevVelocity;
 
-        float accelVel = speed * Time.fixedDeltaTime;
+        float accelVel = playerStats.speed * Time.fixedDeltaTime; // the acceleration of the player
 
-        if (projVel + accelVel > maxAcceleration)
-            accelVel = maxAcceleration - projVel;
+        if (projVel + accelVel > playerStats.maxAcceleration) // if the projected velocity plus the acceleration velocity is greater than max acceleration
+            accelVel = playerStats.maxAcceleration - projVel; // capping the acceleration velocity by the max acceleration minus the projected velocity (capping max player speed)
 
         return prevVelocity + transform.forward * accelVel;
     }
@@ -137,11 +128,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        // TODO: think about cleaning these nested if statements up create guard clauses
         if(context.performed)
         {
             if (!IsGrounded()) //  one check simplyifying if statements keeping from inbeding them, if not grounded dont jump
             {
-                // TODO: wall jump off of the left side of the character results in the jump being doubled, input is also being detected on release
                 if (wallRun.wallRight == true || wallRun.wallLeft == true) // check if can walljump before exiting method
                 { 
                     wallRun.WallJump();
@@ -152,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
             if (wallRun.wallRight == false || wallRun.wallLeft == false)
             {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // reseting y velocity to fix minor bug for jumping, tiny jumps because it is fighting the downward velocity
-                rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+                rb.AddForce(transform.up * playerStats.jumpPower, ForceMode.Impulse);
             }   
         }
 
@@ -160,9 +151,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Respawn()
     {
-        grappleGun.DestroyJoint();
-        rb.velocity = Vector3.zero;
-        transform.position = respawnPoint.position;
+        grappleGun.DestroyJoint(); // remove the grapple gun joint 
+        rb.velocity = Vector3.zero; // set players velocity to 0
+        transform.position = respawnPoint.position; // set players position to the respawn point position
     }
 
 }

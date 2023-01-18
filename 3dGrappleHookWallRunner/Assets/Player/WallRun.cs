@@ -7,13 +7,8 @@ public class WallRun : MonoBehaviour
     Transform orientation; // player transform
 
 
-    [Header("Wall Jump Stats")]
-    [SerializeField] float wallDistance = 0.5f;
-    [SerializeField] float minimumJumpHeight = 1.5f;
-    [SerializeField] float wallRunGrav;
-    [SerializeField] float wallJumpForce;
-
-
+    [Header("ScriptDependencies")]
+    [SerializeField] PlayerStats playerStats;
 
     [HideInInspector]
     public bool wallLeft = false;
@@ -44,17 +39,17 @@ public class WallRun : MonoBehaviour
     }
     bool CanWallRun()
     {
-        return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight); // returns opposite of what it recieves 
+        return !Physics.Raycast(transform.position, Vector3.down, playerStats.minimumJumpHeight); // returns opposite of what it recieves 
     }
 
     void CheckWall()
     {
-        wallLeft = Physics.Raycast(transform.position, -orientation.right,out leftWallHit ,wallDistance, wallLayer);
+        wallLeft = Physics.Raycast(transform.position, -orientation.right,out leftWallHit , playerStats.wallDistance, wallLayer);
         if(wallLeft == true) // if wallleft is true no need to check wall right
         {
             return;
         }
-        wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallDistance, wallLayer);
+        wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallHit, playerStats.wallDistance, wallLayer);
     }
 
 
@@ -89,7 +84,7 @@ public class WallRun : MonoBehaviour
     void StartWallRun()
     {
         rb.useGravity = false;
-        rb.AddForce(Vector3.down * wallRunGrav, ForceMode.Force);
+        rb.AddForce(Vector3.down * playerStats.wallRunGrav, ForceMode.Force);
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, wallRunFov, wallRunFovTime * Time.deltaTime);
 
@@ -106,14 +101,14 @@ public class WallRun : MonoBehaviour
         {
             Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal; // calculating what direction to add force adding up
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // resetting the players y velocity
-            rb.AddForce(wallRunJumpDirection * wallJumpForce, ForceMode.Force); // adding force to the player
+            rb.AddForce(wallRunJumpDirection * playerStats.wallJumpForce, ForceMode.Force); // adding force to the player
         }
         // same process as on the left
         else if (wallRight)
         {
             Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(wallRunJumpDirection * wallJumpForce, ForceMode.Force);
+            rb.AddForce(wallRunJumpDirection * playerStats.wallJumpForce, ForceMode.Force);
         }
     }
 
