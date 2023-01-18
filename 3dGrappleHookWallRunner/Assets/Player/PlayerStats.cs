@@ -21,7 +21,8 @@ public class PlayerStats : ScriptableObject
 
     [Header("Wall Jump Stats")]
     public float wallDistance; // how far the player needs to be from the wall
-    public float minimumJumpHeight;
-    public float wallRunGrav;
-    public float wallJumpForce;
+    public float minimumJumpHeight; // how far from the ground the player needs to be to wall jump
+    public float wallRunGrav; // how much the player is pulled down while wall running
+    [Range(300f, 500f)]
+    public float wallJumpForce; // how much force is applied to the player when wall jumping (Should be from 300-500)
 }
