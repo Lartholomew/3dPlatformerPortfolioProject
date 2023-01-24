@@ -458,6 +458,10 @@ MonoBehaviour:
   Camera: {fileID: 7447775720848071100}
   Player: {fileID: 7447775721328635161}
   maxDistance: 100
+  springValue: 4.5
+  damperValue: 7
+  massScaleValue: 4.5
+  grappling: 0
 --- !u!1 &7447775721194342578
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,16 +677,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallRun: {fileID: 7447775721328635165}
-  groundDrag: 6
-  airDrag: 0
-  speed: 6
-  movementMultiplier: 10
-  airMultiplier: 0.1
-  jumpPower: 6
+  grappleGun: {fileID: 7447775720899737439}
+  playerStats: {fileID: 11400000, guid: 8041e53a90d9dce49a4755b88824605f, type: 2}
   groundCheckPos: {fileID: 7447775721357334579}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  respawnPoint: {fileID: 0}
 --- !u!114 &7447775721328635162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -822,15 +823,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c89e35cdf35214481eb15996c8a8f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientation: {fileID: 7447775721328635161}
-  wallDistance: 0.8
-  minimumJumpHeight: 1.5
-  wallRunGrav: 5
-  wallJumpForce: 500
+  playerStats: {fileID: 11400000, guid: 8041e53a90d9dce49a4755b88824605f, type: 2}
   wallLeft: 0
   wallRight: 0
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 256
   cam: {fileID: 7447775720848071099}
-  fov: 60
   wallRunFov: 90
   wallRunFovTime: 20
   camTilt: 20

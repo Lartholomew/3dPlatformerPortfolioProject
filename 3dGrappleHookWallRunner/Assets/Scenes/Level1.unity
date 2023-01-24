@@ -2481,17 +2481,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 38
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
---- !u!114 &1206452889 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7447775720899737439, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
-  m_PrefabInstance: {fileID: 1734102147}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bcfce5c5978b6742894e1f4daa33675, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1271326780
 GameObject:
   m_ObjectHideFlags: 0
@@ -3257,7 +3246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616869702}
   m_LocalRotation: {x: -0.50000006, y: 0.49999997, z: 0.49999997, w: 0.5000001}
-  m_LocalPosition: {x: 7.18, y: 10.3, z: 34.47}
+  m_LocalPosition: {x: 6.66, y: 10.3, z: 33.63}
   m_LocalScale: {x: 8.955602, y: 1, z: 20}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3290,7 +3279,7 @@ SpringJoint:
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0.50000113, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 6.679999, y: 10.3, z: 34.47}
+  m_ConnectedAnchor: {x: 6.159999, y: 10.3, z: 33.63}
   serializedVersion: 2
   m_Spring: 10
   m_Damper: 0.2
@@ -3652,14 +3641,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7447775721328635163, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
-      propertyPath: grappleGun
-      value: 
-      objectReference: {fileID: 1206452889}
-    - target: {fileID: 7447775721328635163, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
-      propertyPath: playerStats
-      value: 
-      objectReference: {fileID: 11400000, guid: 8041e53a90d9dce49a4755b88824605f, type: 2}
-    - target: {fileID: 7447775721328635163, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 1494324908}
@@ -3672,20 +3653,12 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7447775721328635165, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
-      propertyPath: playerStats
-      value: 
-      objectReference: {fileID: 11400000, guid: 8041e53a90d9dce49a4755b88824605f, type: 2}
-    - target: {fileID: 7447775721328635165, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
       propertyPath: wallRunGrav
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7447775721328635165, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
       propertyPath: wallJumpForce
       value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 7447775721328635165, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
-      propertyPath: wallLayer.m_Bits
-      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c442a171393af0245a30f59fd2a8f7bd, type: 3}
