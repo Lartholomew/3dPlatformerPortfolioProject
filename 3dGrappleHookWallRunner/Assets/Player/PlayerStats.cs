@@ -14,6 +14,7 @@ public class PlayerStats : ScriptableObject
 
     [Header("Movement Stats")]
     public float speed; // grounded movement speed
+    [HideInInspector] public float runTimeSpeed; // speed that should be adjusted when changing the value of the players speed
     public float movementMultiplier; // overcome drag
     public float airMultiplier; // account for less drag in the air
     public float jumpPower; // how much force is applied when the player jumps
@@ -25,4 +26,9 @@ public class PlayerStats : ScriptableObject
     public float wallRunGrav; // how much the player is pulled down while wall running
     [Range(300f, 500f)]
     public float wallJumpForce; // how much force is applied to the player when wall jumping (Should be from 300-500)
+
+    private void OnEnable()
+    {
+        runTimeSpeed = speed;
+    }
 }

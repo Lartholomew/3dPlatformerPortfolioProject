@@ -88,17 +88,17 @@ public class PlayerMovement : MonoBehaviour
         if(IsGrounded() && !IsOnSlope())
         {
            // rb.AddForce(moveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
-           rb.AddForce(Acceleration(moveDirection.normalized) * playerStats.speed * playerStats.movementMultiplier, ForceMode.Force);
+           rb.AddForce(Acceleration(moveDirection.normalized) * playerStats.runTimeSpeed * playerStats.movementMultiplier, ForceMode.Force);
         }
         else if(IsGrounded() && IsOnSlope())
         {
            // rb.AddForce(slopeMoveDirection.normalized * speed * movementMultiplier, ForceMode.Force);
-           rb.AddForce(Acceleration(moveDirection.normalized) * playerStats.speed * playerStats.movementMultiplier, ForceMode.Force);
+           rb.AddForce(Acceleration(slopeMoveDirection.normalized) * playerStats.runTimeSpeed * playerStats.movementMultiplier, ForceMode.Force);
         }
         else if(!IsGrounded())
         {
            // rb.AddForce(moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Force);
-           rb.AddForce(Acceleration(moveDirection.normalized) * playerStats.speed * playerStats.movementMultiplier * playerStats.airMultiplier, ForceMode.Force);
+           rb.AddForce(Acceleration(moveDirection.normalized) * playerStats.runTimeSpeed * playerStats.movementMultiplier * playerStats.airMultiplier, ForceMode.Force);
         }
         
         
