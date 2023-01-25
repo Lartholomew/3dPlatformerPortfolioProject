@@ -1,0 +1,16 @@
+Timer class
+currentTime
+shouldCount
+timerText
+
+
+
+
+Add to PlayerStats
+List<float> times 
+
+
+
+FinishLine Class
+
+OnTriggerEnter when the player enters the finish line pull up the end of level UI stop the timer display the current time achieved by the player show medal/grade for the time achieved and stop player movement
