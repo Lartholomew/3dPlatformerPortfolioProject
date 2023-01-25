@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 // TODO: create more organization for the variables in the inspector
 // TODO: mess with air drag/movment values get it how I want it, mess with wall jump force get it right where its needed, mess with grapple hook joint values get those just right, build level
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody),typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
     
@@ -27,13 +27,35 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform respawnPoint; // empty object in the scene("RespawnPoint") is the respawn point can adjust to create checkpoint system
 
 
+    PlayerInput controls; // reference of the player input for disabling when pausing and when a level is complete
+    
     RaycastHit hit;
+
+    private void OnEnable()
+    {
+        FinishLine.OnFinishLinePassed += DisableControls;
+    }
+
+    private void OnDisable()
+    {
+        FinishLine.OnFinishLinePassed -= DisableControls;   
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        controls = GetComponent<PlayerInput>();
+        rb = GetComponent<Rigidbody>();
+        controls.enabled = true; // dumb proofing, making sure the inputs are always enabled at start
+        SetRbDrag(playerStats.groundDrag);
+    }
+
     bool IsOnSlope()
 
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out hit, 2 / 2 + 0.5f)) // raycast distance is player height / 2 + 0.5f can adjust for better detection
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2 / 2 + 0.5f)) // raycast distance is player height / 2 + 0.5f can adjust for better detection
         {
-            if(hit.normal != Vector3.up) // the object hit is not facing up sloped
+            if (hit.normal != Vector3.up) // the object hit is not facing up sloped
             {
                 return true;
             }
@@ -43,13 +65,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         return false;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-        SetRbDrag(playerStats.groundDrag);
     }
 
     bool IsGrounded()
@@ -122,7 +137,6 @@ public class PlayerMovement : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         horizontalInput = context.ReadValue<Vector2>();
-
     }
 
 
@@ -154,6 +168,11 @@ public class PlayerMovement : MonoBehaviour
         grappleGun.DestroyJoint(); // remove the grapple gun joint 
         rb.velocity = Vector3.zero; // set players velocity to 0
         transform.position = respawnPoint.position; // set players position to the respawn point position
+    }
+
+    void DisableControls()
+    {
+        controls.enabled = false;
     }
 
 }
