@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
-//TODO: add as a listener to end game state event, turn off the stop watch
 public class Stopwatch : MonoBehaviour
 {
     [HideInInspector]
