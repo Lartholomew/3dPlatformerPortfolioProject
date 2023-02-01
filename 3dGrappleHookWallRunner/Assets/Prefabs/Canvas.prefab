@@ -250,10 +250,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endStateUI: {fileID: 4250955945544885003}
-  stopWatchText: {fileID: 0}
-  endStateStopWatchText: {fileID: 0}
-  medalDisplay: {fileID: 0}
-  medalSprites: []
+  stopWatchText: {fileID: 4250955944276732040}
+  endStateStopWatchText: {fileID: 4250955944169366365}
+  medalDisplay: {fileID: 4250955945666867966}
+  medalSprites:
+  - {fileID: 21300000, guid: 66e1efe766502014184dd82fe87cdd4a, type: 3}
+  - {fileID: 21300000, guid: ff74ec543ee9cd14fbf73993a5ab4e3d, type: 3}
+  - {fileID: 21300000, guid: 8ffaa738c0d56a54ca23806d7ea4d4ed, type: 3}
+  parLevelTimes: {fileID: 0}
 --- !u!1 &4250955944688611150
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,3 +440,25 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8220654785195611513, guid: 23103163d55cb6342a4a67f5ec7055b8, type: 3}
   m_PrefabInstance: {fileID: 5254517759730693745}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4250955944169366365 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8220654784424072492, guid: 23103163d55cb6342a4a67f5ec7055b8, type: 3}
+  m_PrefabInstance: {fileID: 5254517759730693745}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4250955945666867966 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8220654785384432783, guid: 23103163d55cb6342a4a67f5ec7055b8, type: 3}
+  m_PrefabInstance: {fileID: 5254517759730693745}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

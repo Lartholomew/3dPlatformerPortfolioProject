@@ -33,7 +33,7 @@ public class Stopwatch : MonoBehaviour
     {
         if (running)
             currentTime += Time.deltaTime;
-        TimeSpan time = TimeSpan.FromSeconds(currentTime);
+        TimeSpan time = TimeSpan.FromSeconds(currentTime); // converting to time span for string formatting
         timerText.text = time.ToString(@"mm\:ss\:fff");
     }
 

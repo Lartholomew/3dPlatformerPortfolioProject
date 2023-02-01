@@ -19,8 +19,9 @@ public class EndStateUI : MonoBehaviour
 
     Stopwatch stopwatch;
 
+    [SerializeField] ParLevelTimes parLevelTimes;
 
-    private void OnEnable()
+    private void OnEnable() // add the display end state ui as a listener to the endstate event
     {
         FinishLine.OnFinishLinePassed += DisplayEndStateUI;
     }
@@ -34,14 +35,43 @@ public class EndStateUI : MonoBehaviour
     void Start()
     {
         stopwatch = FindObjectOfType<Stopwatch>();
-
+        if (stopwatch == null)
+            Debug.LogWarning("WARNING!!! Missing stopwatch script in scene!");
     }
 
-
+    /// <summary>
+    /// Method called when OnFinishLinePassed event is triggered activates ui and displays the current time and medal
+    /// </summary>
     void DisplayEndStateUI()
     {
         endStateUI.SetActive(true);
-        endStateStopWatchText = stopWatchText;
+        endStateStopWatchText.text = stopWatchText.text;
+        stopWatchText.gameObject.SetActive(false);
+        DisplayMedal();
+    }
+
+    /// <summary>
+    /// check the current time against the level par time, level par time is set in inspector with a levelpartimes object
+    /// </summary>
+    void DisplayMedal()
+    {
+        if(stopwatch.currentTime > parLevelTimes.silverPar && stopwatch.currentTime <= parLevelTimes.bronzePar)
+        {
+            medalDisplay.sprite = medalSprites[0];
+        }
+        else if(stopwatch.currentTime > parLevelTimes.goldPar && stopwatch.currentTime <= parLevelTimes.silverPar)
+        {
+            medalDisplay.sprite = medalSprites[1];
+        }
+        else if(stopwatch.currentTime <= parLevelTimes.goldPar)
+        {
+            medalDisplay.sprite = medalSprites[2];
+        }
+        else if(stopwatch.currentTime > parLevelTimes.bronzePar)
+        {
+            medalDisplay.gameObject.SetActive(false);
+        }
+
     }
 
 }
