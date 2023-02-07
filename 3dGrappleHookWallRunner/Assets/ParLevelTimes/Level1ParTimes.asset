@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9faa14797e6f3b4d8c1c086495d71d7, type: 3}
   m_Name: Level1ParTimes
   m_EditorClassIdentifier: 
-  bronzePar: 15
-  silverPar: 12
-  goldPar: 8
+  bronzePar: 20
+  silverPar: 18
+  goldPar: 16
