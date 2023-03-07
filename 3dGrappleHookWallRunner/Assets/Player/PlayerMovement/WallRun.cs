@@ -23,7 +23,12 @@ public class WallRun : MonoBehaviour
     RaycastHit rightWallHit;
     [SerializeField] LayerMask wallLayer;
     [Header("Wall Run Camera Settings")]
-
+    [SerializeField] Camera cam;
+    float defaultFov;
+    [SerializeField] float wallRunFov;
+    [SerializeField] float wallRunFovTime;
+    [SerializeField] float camTilt;
+    [SerializeField] float camTiltTime;
 
     public float tilt { get; private set; }
     private void Start()
