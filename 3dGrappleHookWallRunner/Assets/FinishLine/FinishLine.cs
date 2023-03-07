@@ -15,4 +15,9 @@ public class FinishLine : MonoBehaviour
             OnFinishLinePassed();
         }
     }
+
+    public void Finish()
+    {
+        OnFinishLinePassed();
+    }
 }

@@ -833,7 +833,7 @@ MonoBehaviour:
   wallRunFov: 90
   wallRunFovTime: 20
   camTilt: 20
-  camTiltTime: 20
+  camTiltTime: 8
 --- !u!1 &7447775721357334578
 GameObject:
   m_ObjectHideFlags: 0

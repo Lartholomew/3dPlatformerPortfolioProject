@@ -16,8 +16,8 @@ public class MouseLook : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+      Cursor.lockState = CursorLockMode.Locked;
+      Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -35,11 +35,12 @@ public class MouseLook : MonoBehaviour
 
     public void RecieveMouseX(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
         {
             mouseX = context.ReadValue<float>() * sensitivityX;
-            
         }
+        else if (context.canceled)
+            mouseX = 0;
     }
 
     public void RecieveMouseY(InputAction.CallbackContext context)
@@ -48,5 +49,7 @@ public class MouseLook : MonoBehaviour
         {
             mouseY = context.ReadValue<float>() * sensitivityY;
         }
+        else if(context.canceled)
+            mouseY = 0;
     }
 }

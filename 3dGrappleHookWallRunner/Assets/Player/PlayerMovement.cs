@@ -160,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(transform.up * playerStats.jumpPower, ForceMode.Impulse);
             }   
         }
-
+      
     }
 
     void Respawn()
@@ -170,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = respawnPoint.position; // set players position to the respawn point position
     }
 
-    void DisableControls()
+    public void DisableControls()
     {
         controls.enabled = false;
     }

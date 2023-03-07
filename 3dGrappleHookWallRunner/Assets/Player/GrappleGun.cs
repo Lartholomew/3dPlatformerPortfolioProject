@@ -20,6 +20,7 @@ public class GrappleGun : MonoBehaviour
     [Range(1f, 10f)]
     [SerializeField] float massScaleValue = 4.5f;
 
+    [SerializeField] float grappleGunDurration; // how long can the grapple gun grapple to an object
 
     RaycastHit hit;
     Ray ray;
@@ -48,6 +49,7 @@ public class GrappleGun : MonoBehaviour
             if(Physics.Raycast(Camera.position, Camera.forward, out hit, maxDistance, grappleable))
             {
                 grappling = true;
+                StartCoroutine(GrappleGunTimer());
                 grapplePoint = hit.point;
                 joint = Player.gameObject.AddComponent<SpringJoint>();
                 joint.autoConfigureConnectedAnchor = false;
@@ -68,7 +70,8 @@ public class GrappleGun : MonoBehaviour
         if(context.canceled)
         {
            // line.positionCount = 0;
-            Destroy(joint);
+           StopCoroutine(GrappleGunTimer());
+           Destroy(joint);
         }
     }
 
@@ -91,5 +94,15 @@ public class GrappleGun : MonoBehaviour
         }
         line.SetPosition(0, barrel.position);
         line.SetPosition(1, grapplePoint);
+    }
+
+    IEnumerator GrappleGunTimer()
+    {
+        float startTime = Time.time;
+        while((Time.time - startTime) < grappleGunDurration)
+        {
+            yield return null;
+        }
+        DestroyJoint();
     }
 }

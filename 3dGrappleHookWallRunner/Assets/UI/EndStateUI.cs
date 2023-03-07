@@ -42,7 +42,7 @@ public class EndStateUI : MonoBehaviour
     /// <summary>
     /// Method called when OnFinishLinePassed event is triggered activates ui and displays the current time and medal
     /// </summary>
-    void DisplayEndStateUI()
+    public void DisplayEndStateUI()
     {
         endStateUI.SetActive(true);
         endStateStopWatchText.text = stopWatchText.text;
