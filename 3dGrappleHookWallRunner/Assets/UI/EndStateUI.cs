@@ -21,6 +21,10 @@ public class EndStateUI : MonoBehaviour
 
     [SerializeField] ParLevelTimes parLevelTimes;
 
+    [SerializeField] TMP_Text playerTimeText;
+    [SerializeField] TMP_Text[] parLevelTimesText;
+
+
     private void OnEnable() // add the display end state ui as a listener to the endstate event
     {
         FinishLine.OnFinishLinePassed += DisplayEndStateUI;
@@ -36,7 +40,7 @@ public class EndStateUI : MonoBehaviour
     {
         stopwatch = FindObjectOfType<Stopwatch>();
         if (stopwatch == null)
-            Debug.LogWarning("WARNING!!! Missing stopwatch script in scene!");
+            Debug.LogWarning("WARNING!!! Missing stopwatch script in scene attach it to a game object!");
     }
 
     /// <summary>
@@ -48,6 +52,21 @@ public class EndStateUI : MonoBehaviour
         endStateStopWatchText.text = stopWatchText.text;
         stopWatchText.gameObject.SetActive(false);
         DisplayMedal();
+        DisplayParTimes();
+        DisplayPlayerTime();
+    }
+
+    void DisplayParTimes()
+    {
+        for(int i = 0; i < parLevelTimesText.Length; i++)
+        {
+            parLevelTimesText[i].text = parLevelTimes.parLevelTimes[i].ToString();
+        }
+    }
+
+    void DisplayPlayerTime()
+    {
+        playerTimeText.text = stopwatch.currentTime.ToString();
     }
 
     /// <summary>
@@ -55,23 +74,22 @@ public class EndStateUI : MonoBehaviour
     /// </summary>
     void DisplayMedal()
     {
-        if(stopwatch.currentTime > parLevelTimes.silverPar && stopwatch.currentTime <= parLevelTimes.bronzePar)
+        if(stopwatch.currentTime > parLevelTimes.parLevelTimes[1] && stopwatch.currentTime <= parLevelTimes.parLevelTimes[2])
         {
-            medalDisplay.sprite = medalSprites[0];
+            medalDisplay.sprite = medalSprites[2]; // bronze
         }
-        else if(stopwatch.currentTime > parLevelTimes.goldPar && stopwatch.currentTime <= parLevelTimes.silverPar)
+        else if(stopwatch.currentTime > parLevelTimes.parLevelTimes[0] && stopwatch.currentTime <= parLevelTimes.parLevelTimes[1])
         {
-            medalDisplay.sprite = medalSprites[1];
+            medalDisplay.sprite = medalSprites[1]; // silver 
         }
-        else if(stopwatch.currentTime <= parLevelTimes.goldPar)
+        else if(stopwatch.currentTime <= parLevelTimes.parLevelTimes[0])
         {
-            medalDisplay.sprite = medalSprites[2];
+            medalDisplay.sprite = medalSprites[0]; // gold
         }
-        else if(stopwatch.currentTime > parLevelTimes.bronzePar)
+        else if(stopwatch.currentTime > parLevelTimes.parLevelTimes[2])
         {
             medalDisplay.gameObject.SetActive(false);
         }
-
     }
 
 }

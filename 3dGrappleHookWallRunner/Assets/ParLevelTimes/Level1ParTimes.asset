@@ -15,3 +15,7 @@ MonoBehaviour:
   bronzePar: 25
   silverPar: 20
   goldPar: 18
+  parLevelTimes:
+  - 18
+  - 20
+  - 25

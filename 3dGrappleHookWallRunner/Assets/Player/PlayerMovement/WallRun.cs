@@ -10,6 +10,8 @@ public class WallRun : MonoBehaviour
     [Header("ScriptDependencies")]
     [SerializeField] PlayerStats playerStats;
 
+    bool wallRunning;
+
     [HideInInspector]
     public bool wallLeft = false;
     [HideInInspector]
@@ -57,8 +59,17 @@ public class WallRun : MonoBehaviour
     {
         if(collision.gameObject.layer == 8)
         {
-            Vector3 prejVector = Vector3.Cross(previousWallVelocity, rb.velocity);
-            Debug.Log(prejVector);
+            if(wallRunning)
+            {
+                Vector3 prejVel = Vector3.Cross(previousWallVelocity, collision.gameObject.transform.up);
+                Debug.Log(prejVel);
+                /*
+                if(prejVel != Vector3.zero)
+                {
+                    rb.velocity = prejVel;
+                }
+                */
+            }
             // TODO: transfer velocity when jumping to a perpendicular wall
         }    
     }
@@ -88,11 +99,14 @@ public class WallRun : MonoBehaviour
             StopWallRun();
         }
 
+        if(playerStats.onGround)
+            previousWallVelocity = Vector3.zero;
 
     }
 
     void StartWallRun()
     {
+        wallRunning = true;
         rb.useGravity = false;
         rb.AddForce(Vector3.down * playerStats.wallRunGrav, ForceMode.Force);
 
@@ -125,6 +139,7 @@ public class WallRun : MonoBehaviour
 
     void StopWallRun()
     {
+        wallRunning = false;
         rb.useGravity = true;
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, defaultFov, wallRunFovTime * Time.deltaTime);
         tilt = Mathf.Lerp(tilt, 0, camTiltTime * Time.deltaTime);

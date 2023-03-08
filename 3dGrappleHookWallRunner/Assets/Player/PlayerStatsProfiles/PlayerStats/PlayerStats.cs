@@ -27,6 +27,8 @@ public class PlayerStats : ScriptableObject
     [Range(300f, 500f)]
     public float wallJumpForce; // how much force is applied to the player when wall jumping (Should be from 300-500)
 
+    public bool onGround;
+
     private void OnEnable()
     {
         runTimeSpeed = speed;
