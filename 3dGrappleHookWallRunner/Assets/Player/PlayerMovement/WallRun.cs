@@ -15,7 +15,7 @@ public class WallRun : MonoBehaviour
     [HideInInspector]
     public bool wallRight = false;
 
-
+    Vector3 previousWallVelocity;
 
     Rigidbody rb;
 
@@ -52,6 +52,16 @@ public class WallRun : MonoBehaviour
         wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallHit, playerStats.wallDistance, wallLayer);
     }
 
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == 8)
+        {
+            Vector3 prejVector = Vector3.Cross(previousWallVelocity, rb.velocity);
+            Debug.Log(prejVector);
+            // TODO: transfer velocity when jumping to a perpendicular wall
+        }    
+    }
 
     // Update is called once per frame
     void Update()
@@ -108,8 +118,9 @@ public class WallRun : MonoBehaviour
         {
             Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(wallRunJumpDirection * playerStats.wallJumpForce, ForceMode.Force);
+            rb.AddForce(wallRunJumpDirection * playerStats.wallJumpForce, ForceMode.Force);          
         }
+        previousWallVelocity = rb.velocity;
     }
 
     void StopWallRun()

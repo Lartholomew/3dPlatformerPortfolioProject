@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 Acceleration(Vector3 prevVelocity)
     {
-        float projVel = Vector3.Dot(prevVelocity, transform.forward); // the projected velocity of the player
+        float projVel = Vector3.Dot(prevVelocity.normalized, transform.forward.normalized); // the projected velocity of the player
         if(projVel == 0) // checking if there is no motion
             return prevVelocity;
 
