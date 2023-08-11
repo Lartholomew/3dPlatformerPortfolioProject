@@ -115,9 +115,7 @@ public class PlayerMovement : MonoBehaviour
         {
            // rb.AddForce(moveDirection.normalized * speed * movementMultiplier * airMultiplier, ForceMode.Force);
            rb.AddForce(Acceleration(moveDirection.normalized) * playerStats.runTimeSpeed * playerStats.movementMultiplier * playerStats.airMultiplier, ForceMode.Force);
-        }
-        
-        
+        } 
     }
 
     Vector3 Acceleration(Vector3 prevVelocity)
@@ -174,6 +172,8 @@ public class PlayerMovement : MonoBehaviour
     public void DisableControls()
     {
         controls.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
 }
