@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 [RequireComponent(typeof(LineRenderer))]
 public class GrappleGun : MonoBehaviour
 {
     LineRenderer line;
     [SerializeField] LayerMask grappleable;
+    [SerializeField] Image grappleTimer;
     [Header("Transforms")]
     [SerializeField] Transform barrel;
     [SerializeField] Transform Camera;
@@ -81,6 +83,7 @@ public class GrappleGun : MonoBehaviour
     public void DestroyJoint()
     {
         grappling = false;
+        grappleTimer.fillAmount = 1f;
         Destroy(joint);
     }
 
@@ -101,6 +104,7 @@ public class GrappleGun : MonoBehaviour
         float startTime = Time.time;
         while((Time.time - startTime) < grappleGunDurration)
         {
+            grappleTimer.fillAmount = 1 - (Time.time - startTime) / grappleGunDurration;
             yield return null;
         }
         DestroyJoint();
